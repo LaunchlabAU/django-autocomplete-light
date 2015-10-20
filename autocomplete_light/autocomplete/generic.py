@@ -84,7 +84,7 @@ class AutocompleteGeneric(six.with_metaclass(AutocompleteGenericMetaClass,
                 return False
 
             try:
-                content_type_id, object_id = value.split('-', 1)
+                content_type_id, object_id = value.split('@', 1)
             except ValueError:
                 return False
 
@@ -150,8 +150,8 @@ class AutocompleteGeneric(six.with_metaclass(AutocompleteGenericMetaClass,
             ctype = ContentType.objects.get_for_model(queryset.model).pk
 
             try:
-                ids = [x.split('-')[1] for x in self.values
-                    if x is not None and int(x.split('-')[0]) == ctype]
+                ids = [x.split('@')[1] for x in self.values
+                    if x is not None and int(x.split('@')[0]) == ctype]
             except ValueError:
                 continue
 

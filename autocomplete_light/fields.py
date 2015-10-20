@@ -113,7 +113,7 @@ class GenericModelChoiceField(FieldBase, forms.Field):
             # be passed here. This ONLY happens when in an inline ....
             return value
         elif isinstance(value, models.Model):
-            return '%s-%s' % (ContentType.objects.get_for_model(value).pk,
+            return '%s@%s' % (ContentType.objects.get_for_model(value).pk,
                               value.pk)
 
     def to_python(self, value):
@@ -126,7 +126,7 @@ class GenericModelChoiceField(FieldBase, forms.Field):
         if not value:
             return value
 
-        content_type_id, object_id = value.split('-', 1)
+        content_type_id, object_id = value.split('@', 1)
         try:
             content_type = ContentType.objects.get_for_id(content_type_id)
         except ContentType.DoesNotExist:
